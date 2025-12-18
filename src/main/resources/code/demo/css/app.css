@@ -1,0 +1,45 @@
+/* Base app styles */
+.root {
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.sidebar {
+    -fx-background-radius: 12;
+    -fx-background-insets: 0;
+    -fx-padding: 8 8 8 8;
+}
+
+.nav-item {
+    -fx-padding: 10 12 10 12;
+    -fx-background-radius: 8;
+}
+
+.nav-item:hover {
+    -fx-cursor: hand;
+}
+
+.nav-item.active {
+    -fx-font-weight: bold;
+}
+
+.content {
+    -fx-padding: 12;
+}
+
+Button {
+    -fx-background-radius: 8;
+}
+
+TextField, PasswordField, ComboBox, DatePicker, TableView {
+    -fx-background-radius: 8;
+}
+
+TitledPane {
+    -fx-background-radius: 8;
+}

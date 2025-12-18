@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.AboutController">
+    <left>
+        <VBox spacing="8" styleClass="sidebar" prefWidth="200">
+            <children>
+                <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item" />
+                <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
+                <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item" />
+                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item active" />
+            </children>
+            <padding><Insets top="16" left="12" right="12" bottom="16"/></padding>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="12" styleClass="content">
+            <children>
+                <Label fx:id="lblTitle" text="About Library Management System" styleClass="title" />
+                <Label text="A JavaFX + JDBC demo application using MVC + DAO patterns." wrapText="true" />
+                <Label text="Developers: Team Alpha" />
+            </children>
+            <padding><Insets top="16" left="16" right="16" bottom="16"/></padding>
+        </VBox>
+    </center>
+</BorderPane>

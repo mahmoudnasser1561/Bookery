@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.DashboardController">
+    <left>
+        <VBox spacing="8" styleClass="sidebar" prefWidth="200">
+            <children>
+                <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item active" />
+                <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
+                <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item" />
+                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item" />
+            </children>
+            <padding><Insets top="16" left="12" right="12" bottom="16"/></padding>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="16" alignment="TOP_LEFT" styleClass="content">
+            <children>
+                <Label fx:id="lblWelcome" styleClass="title" text="Welcome"/>
+                <HBox spacing="16">
+                    <children>
+                        <TitledPane text="Total Books"><content><Label fx:id="lblBooks" text="0"/></content></TitledPane>
+                        <TitledPane text="Active Users"><content><Label fx:id="lblUsers" text="0"/></content></TitledPane>
+                        <TitledPane text="DB Status"><content><Label fx:id="lblDbStatus" text="Unknown"/></content></TitledPane>
+                    </children>
+                </HBox>
+            </children>
+            <padding><Insets top="24" left="24" right="24" bottom="24"/></padding>
+        </VBox>
+    </center>
+</BorderPane>

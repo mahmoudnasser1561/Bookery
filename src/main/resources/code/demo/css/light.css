@@ -1,0 +1,39 @@
+/* Light theme */
+.root {
+    -fx-base: #ffffff;
+    -fx-background: #f5f7fb;
+    -fx-text-fill: #1f2937;
+}
+
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 12, 0, 0, 2);
+}
+
+.nav-item {
+    -fx-text-fill: #374151;
+}
+.nav-item:hover {
+    -fx-background-color: #eef2ff;
+}
+.nav-item.active {
+    -fx-background-color: #e0e7ff;
+}
+
+.content {
+    -fx-background-color: transparent;
+}
+
+Button {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: white;
+}
+Button:hover {
+    -fx-background-color: #4338ca;
+}
+
+TextField, PasswordField, ComboBox, DatePicker, TableView, TitledPane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+}

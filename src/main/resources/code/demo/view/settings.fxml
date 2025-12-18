@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.SettingsController">
+    <left>
+        <VBox spacing="8" styleClass="sidebar" prefWidth="200">
+            <children>
+                <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item" />
+                <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
+                <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item active" />
+                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item" />
+            </children>
+            <padding><Insets top="16" left="12" right="12" bottom="16"/></padding>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="16" styleClass="content">
+            <children>
+                <TitledPane text="Font Size">
+                    <content>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <children>
+                                <Slider fx:id="fontSlider" min="10" max="22" value="14" />
+                                <Label fx:id="lblFontValue" text="14px" />
+                            </children>
+                        </HBox>
+                    </content>
+                </TitledPane>
+                <TitledPane text="Database">
+                    <content>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <children>
+                                <Button fx:id="btnTestDb" text="Test Connection" onAction="#onTestDb" />
+                            </children>
+                        </HBox>
+                    </content>
+                </TitledPane>
+                <TitledPane text="Theme">
+                    <content>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <children>
+                                <Button fx:id="btnLight" text="Light" onAction="#onLight" />
+                                <Button fx:id="btnDark" text="Dark" onAction="#onDark" />
+                            </children>
+                        </HBox>
+                    </content>
+                </TitledPane>
+            </children>
+            <padding><Insets top="16" left="16" right="16" bottom="16"/></padding>
+        </VBox>
+    </center>
+</BorderPane>

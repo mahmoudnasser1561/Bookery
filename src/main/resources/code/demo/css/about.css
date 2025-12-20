@@ -1,0 +1,66 @@
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.description-text {
+    -fx-font-size: 14px;
+    -fx-fill: #555;
+}
+
+/* ستايل التاقات الخاصة بالتقنيات */
+.tech-tag {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333;
+    -fx-padding: 5 10;
+    -fx-background-radius: 15;
+    -fx-font-size: 12px;
+}
+
+/* كارت العضو */
+.member-card {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #eee;
+}
+
+.member-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2980b9;
+}
+
+.member-role {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* بادج للإنجازات الخاصة */
+.achievement-badge {
+    -fx-background-color: #d6eaf8; /* Light Blue */
+    -fx-text-fill: #2980b9;
+    -fx-padding: 3 8;
+    -fx-background-radius: 4;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-margin: 5 0 0 0;
+}
+
+.achievement-badge-gold {
+    -fx-background-color: #fcf3cf; /* Light Gold */
+    -fx-text-fill: #d35400;
+    -fx-padding: 3 8;
+    -fx-background-radius: 4;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}

@@ -15,6 +15,7 @@ module code.demo {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
+
     opens code.demo to javafx.fxml;
     opens code.demo.controller to javafx.fxml;
     exports code.demo;

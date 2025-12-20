@@ -1,27 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.AboutController">
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.AboutController" stylesheets="@../css/about.css">
+
     <left>
-        <VBox spacing="8" styleClass="sidebar" prefWidth="200">
+        <VBox spacing="10" styleClass="sidebar" prefWidth="220">
             <children>
                 <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item" />
                 <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
                 <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item" />
-                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item active" />
+                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item, active-nav" />
             </children>
-            <padding><Insets top="16" left="12" right="12" bottom="16"/></padding>
+            <padding><Insets top="20" left="15" right="15" bottom="20"/></padding>
         </VBox>
     </left>
+
     <center>
-        <VBox spacing="12" styleClass="content">
-            <children>
-                <Label fx:id="lblTitle" text="About Library Management System" styleClass="title" />
-                <Label text="A JavaFX + JDBC demo application using MVC + DAO patterns." wrapText="true" />
-                <Label text="Developers: Team Alpha" />
-            </children>
-            <padding><Insets top="16" left="16" right="16" bottom="16"/></padding>
-        </VBox>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="20" styleClass="content-area">
+                    <padding><Insets top="30" left="30" right="30" bottom="30"/></padding>
+
+                    <VBox spacing="10">
+                        <Label fx:id="lblTitle" text="Library Management System" styleClass="page-title" />
+                        <TextFlow>
+                            <Text styleClass="description-text" text="A comprehensive software solution designed to streamline library operations. This project implements a robust architecture to manage book inventories, borrower records, and transactions efficiently."/>
+                        </TextFlow>
+
+                        <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+                            <Label text="JavaFX" styleClass="tech-tag" />
+                            <Label text="JDBC &amp; MySQL" styleClass="tech-tag" />
+                            <Label text="MVC Pattern" styleClass="tech-tag" />
+                            <Label text="DAO Architecture" styleClass="tech-tag" />
+                        </HBox>
+                    </VBox>
+
+                    <Separator />
+
+                    <Label text="Meet the Team" styleClass="section-header" />
+
+                    <GridPane hgap="20" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50" />
+                            <ColumnConstraints percentWidth="50" />
+                        </columnConstraints>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label text="Mohamed Hassan" styleClass="member-name"/>
+                            <Label text="Computer Architecture &amp; DB Management" styleClass="member-role"/>
+                        </VBox>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label text="Mohamed Adel" styleClass="member-name"/>
+                            <Label text="Backend Java Developer" styleClass="member-role"/>
+                            <Label text="ICPC Finalist" styleClass="achievement-badge"/>
+                        </VBox>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <Label text="Youssef Osman" styleClass="member-name"/>
+                            <Label text="Graphic Designer &amp; UI/UX" styleClass="member-role"/>
+                        </VBox>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <Label text="Mohamed Mamdouh" styleClass="member-name"/>
+                            <Label text="Flutter Developer" styleClass="member-role"/>
+                        </VBox>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <Label text="Youssef Mahmoud" styleClass="member-name"/>
+                            <Label text="Algorithm Specialist" styleClass="member-role"/>
+                            <Label text="ICPC Finalist" styleClass="achievement-badge"/>
+                        </VBox>
+
+                        <VBox styleClass="member-card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <Label text="Mahmoud Nasser" styleClass="member-name"/>
+                            <Label text="Open Source Contributor" styleClass="member-role"/>
+                            <Label text="Google Summer of Code (GSoC)" styleClass="achievement-badge-gold"/>
+                        </VBox>
+
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 </BorderPane>

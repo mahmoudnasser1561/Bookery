@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome VIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+            font-family: 'Poppins', 'Cairo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 85%;
+            z-index: 10;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: popUp 0.8s ease-out forwards;
+        }
+        @keyframes popUp {
+            to { transform: scale(1); opacity: 1; }
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2.2rem;
+            min-height: 70px;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+        p.subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        .stats-grid {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        .stat-item {
+            background: #fff0f6;
+            border: 2px solid #ffdeeb;
+            border-radius: 12px;
+            padding: 15px;
+            flex: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        .enter-btn {
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #f06595);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(240, 101, 149, 0.4);
+            transition: transform 0.2s;
+            font-family: 'Poppins', sans-serif;
+            opacity: 0;
+            animation: fadeInBtn 1s ease forwards;
+            animation-delay: 4s;
+        }
+        .enter-btn:hover {
+            transform: scale(1.05);
+        }
+        @keyframes fadeInBtn {
+            to { opacity: 1; }
+        }
+        .stat-item h3 { margin: 0; color: #c2255c; font-size: 1.4rem; }
+        .stat-item span { font-size: 0.85rem; color: #868e96; font-weight: bold; }
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .confetti {
+            position: absolute;
+            top: -50px;
+            font-size: 20px;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="confetti-container" id="confetti-wrapper"></div>
+<div class="welcome-card">
+    <h1 id="typewriter"></h1>
+    <p class="subtitle">✨ The books are bowing in your presence ✨</p>
+    <div class="stats-grid">
+        <div class="stat-item" id="s1">
+            <h3>#1</h3>
+            <span>Favorite Prof</span>
+        </div>
+        <div class="stat-item" id="s2">
+            <h3>99%</h3>
+            <span>Patience Level</span>
+        </div>
+        <div class="stat-item" id="s3">
+            <h3>Perfect</h3>
+            <span>Project Status</span>
+        </div>
+    </div>
+</div>
+<script>
+    const text = "  Welcome, Supreme Librarian     Dr. Wijdan!";
+    let i = 0;
+    const speed = 60;
+
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+        } else {
+            showStats();
+        }
+    }
+
+    function showStats() {
+        setTimeout(() => { showEl('s1') }, 200);
+        setTimeout(() => { showEl('s2') }, 500);
+        setTimeout(() => { showEl('s3') }, 800);
+        setTimeout(goToAdmin, 6000);
+    }
+
+    function showEl(id) {
+        const el = document.getElementById(id);
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+    }
+
+    function createConfetti() {
+        const wrapper = document.getElementById('confetti-wrapper');
+        const shapes = ['🌸', '💖', '✨', '📚', '👑'];
+        const colors = ['#ff6b6b', '#f06595', '#cc5de8', '#845ef7'];
+        for (let j = 0; j < 60; j++) {
+            const el = document.createElement('div');
+            el.classList.add('confetti');
+            el.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            el.style.opacity = Math.random();
+            wrapper.appendChild(el);
+        }
+    }
+
+    function goToAdmin() {
+        alert("OPEN_DASHBOARD");
+    }
+
+    window.onload = function() {
+        createConfetti();
+        setTimeout(typeWriter, 50);
+    };
+</script>
+</body>
+</html>

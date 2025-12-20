@@ -4,11 +4,18 @@ import code.demo.MainApplication;
 import code.demo.core.UserSession;
 import code.demo.model.Role;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,8 +33,52 @@ public abstract class BaseController {
     }
 
     protected void showError(String title, String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle(title); a.setHeaderText(null); a.setContentText(msg); a.showAndWait();
+        Alert a = new Alert(Alert.AlertType.NONE);
+        a.setTitle(title);
+        a.setHeaderText(null);
+
+        // --- (نفس كود الصورة السابق) ---
+        ImageView imageView = null;
+        try {
+            java.io.InputStream imageStream = getClass().getResourceAsStream("/error.png");
+            if (imageStream != null) {
+                Image image = new Image(imageStream);
+                imageView = new ImageView(image);
+                imageView.setPreserveRatio(true);
+                imageView.setFitHeight(300);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+
+        // --- (نفس كود النص السابق) ---
+        Label label = new Label(msg);
+        label.setWrapText(true);
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+        // --- (التعديل المهم هنا) ---
+        Button okBtn = new Button("OK");
+        okBtn.setMinWidth(80);
+
+        // 1. إصلاح زر الـ OK الخاص بنا
+        // (يجب تعيين النتيجة ليعرف التنبيه أنه انتهى)
+        okBtn.setOnAction(e -> {
+            a.setResult(javafx.scene.control.ButtonType.OK);
+            a.close();
+        });
+
+        VBox vbox = new VBox(15);
+        vbox.setAlignment(Pos.CENTER);
+        if (imageView != null) vbox.getChildren().add(imageView);
+        vbox.getChildren().addAll(label, okBtn);
+
+        a.getDialogPane().setContent(vbox);
+
+        // 2. إصلاح زر الإغلاق (X) الموجود في الشريط العلوي
+        // نحصل على الـ Window الخاصة بالتنبيه ونجبرها على العمل
+        javafx.stage.Window window = a.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> a.close());
+
+        a.showAndWait();
     }
 
     protected void switchScene(Node anyNodeInScene, String fxmlPath) {

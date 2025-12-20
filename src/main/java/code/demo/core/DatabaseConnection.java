@@ -19,9 +19,9 @@ public class DatabaseConnection {
     public synchronized void initialize() {
         if (dataSource != null) return;
 
-        String url = System.getenv().getOrDefault("LMS_DB_URL", "jdbc:mysql://sql8.freesqldatabase.com:3306/sql8812338");
-        String user = System.getenv().getOrDefault("LMS_DB_USER", "sql8812338");
-        String pass = System.getenv().getOrDefault("LMS_DB_PASS", "unUeIUTGyQ");
+        String url = System.getenv("LMS_DB_URL");
+        String user = System.getenv("LMS_DB_USER");
+        String pass = System.getenv("LMS_DB_PASS");
 
         HikariConfig cfg = new HikariConfig();
         cfg.setJdbcUrl(url);
@@ -30,7 +30,7 @@ public class DatabaseConnection {
         cfg.setMaximumPoolSize(10);
         cfg.setPoolName("LMSPool");
         cfg.addDataSourceProperty("cachePrepStmts", "true");
-        cfg.addDataSourceProperty("prepStmtCacheSize", "250");
+        cfg.addDataSourceProperty("prepStmtCacheSize", "20");
         cfg.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
         dataSource = new HikariDataSource(cfg);

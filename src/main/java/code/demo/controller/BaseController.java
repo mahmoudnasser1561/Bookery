@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -32,9 +33,19 @@ public abstract class BaseController {
     protected void switchScene(Node anyNodeInScene, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(fxmlPath));
-            Parent root = loader.load();
+            Parent newContent = loader.load();
             Scene scene = anyNodeInScene.getScene();
-            scene.setRoot(root);
+            if (scene.getRoot() instanceof StackPane sp) {
+                // Preserve the global overlay (last child) and replace only the content (first child)
+                if (sp.getChildren().isEmpty()) {
+                    sp.getChildren().add(newContent);
+                } else {
+                    // assume index 0 is content, others (e.g., overlay) stay
+                    sp.getChildren().set(0, newContent);
+                }
+            } else {
+                scene.setRoot(newContent);
+            }
         } catch (IOException e) {
             showError("Navigation Error", e.getMessage());
         }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.demo.controller.AuthorManagementController">
+    <left>
+        <VBox spacing="8" styleClass="sidebar" prefWidth="200">
+            <children>
+                <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item" />
+                <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
+                <Label text="Users" onMouseClicked="#goUsers" styleClass="nav-item" />
+                <Label text="Authors" onMouseClicked="#goAuthors" styleClass="nav-item active" />
+                <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item" />
+                <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item" />
+            </children>
+            <padding><Insets top="16" left="12" right="12" bottom="16"/></padding>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="12" styleClass="content">
+            <children>
+                <HBox spacing="8">
+                    <children>
+                        <Button fx:id="btnAdd" text="Add" onAction="#onAdd" />
+                        <Button fx:id="btnEdit" text="Edit" onAction="#onEdit" />
+                        <Button fx:id="btnDelete" text="Delete" onAction="#onDelete" />
+                    </children>
+                </HBox>
+                <TableView fx:id="table" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="60" />
+                        <TableColumn fx:id="colName" text="Name" prefWidth="240" />
+                        <TableColumn fx:id="colNationality" text="Nationality" prefWidth="160" />
+                    </columns>
+                </TableView>
+            </children>
+            <padding><Insets top="16" left="16" right="16" bottom="16"/></padding>
+        </VBox>
+    </center>
+</BorderPane>

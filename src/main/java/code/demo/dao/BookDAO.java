@@ -11,7 +11,8 @@ import java.util.List;
 public class BookDAO {
     public List<Book> findAll() {
         List<Book> list = new ArrayList<>();
-        String sql = "SELECT id, title, author, category, publish_date, isbn FROM books ORDER BY id DESC";
+        String sql = "SELECT b.id, b.title, b.author, b.author_id, b.category, b.publish_date, b.isbn, a.name AS author_name " +
+                "FROM books b LEFT JOIN authors a ON b.author_id = a.id ORDER BY b.id DESC";
         try (Connection c = DatabaseConnection.getInstance().getConnection();
              Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -36,10 +37,12 @@ public class BookDAO {
     public List<Book> search(String pattern) {
         List<Book> list = new ArrayList<>();
         String like = "%" + pattern + "%";
-        String sql = "SELECT id, title, author, category, publish_date, isbn FROM books WHERE title LIKE ? OR author LIKE ? OR category LIKE ? OR isbn LIKE ? ORDER BY id DESC";
+        String sql = "SELECT b.id, b.title, b.author, b.author_id, b.category, b.publish_date, b.isbn, a.name AS author_name " +
+                "FROM books b LEFT JOIN authors a ON b.author_id = a.id " +
+                "WHERE b.title LIKE ? OR b.author LIKE ? OR b.category LIKE ? OR b.isbn LIKE ? OR a.name LIKE ? ORDER BY b.id DESC";
         try (Connection c = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, like); ps.setString(2, like); ps.setString(3, like); ps.setString(4, like);
+            ps.setString(1, like); ps.setString(2, like); ps.setString(3, like); ps.setString(4, like); ps.setString(5, like);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) list.add(map(rs));
             }
@@ -50,29 +53,31 @@ public class BookDAO {
     }
 
     public void insert(Book b) throws SQLException {
-        String sql = "INSERT INTO books (title, author, category, publish_date, isbn) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO books (title, author, author_id, category, publish_date, isbn) VALUES (?,?,?,?,?,?)";
         try (Connection c = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, b.getTitle());
             ps.setString(2, b.getAuthor());
-            ps.setString(3, b.getCategory());
-            if (b.getPublishDate() != null) ps.setDate(4, Date.valueOf(b.getPublishDate())); else ps.setNull(4, Types.DATE);
-            ps.setString(5, b.getIsbn());
+            if (b.getAuthorId() != null) ps.setInt(3, b.getAuthorId()); else ps.setNull(3, Types.INTEGER);
+            ps.setString(4, b.getCategory());
+            if (b.getPublishDate() != null) ps.setDate(5, Date.valueOf(b.getPublishDate())); else ps.setNull(5, Types.DATE);
+            ps.setString(6, b.getIsbn());
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) { if (keys.next()) b.setId(keys.getInt(1)); }
         }
     }
 
     public void update(Book b) throws SQLException {
-        String sql = "UPDATE books SET title=?, author=?, category=?, publish_date=?, isbn=? WHERE id=?";
+        String sql = "UPDATE books SET title=?, author=?, author_id=?, category=?, publish_date=?, isbn=? WHERE id=?";
         try (Connection c = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, b.getTitle());
             ps.setString(2, b.getAuthor());
-            ps.setString(3, b.getCategory());
-            if (b.getPublishDate() != null) ps.setDate(4, Date.valueOf(b.getPublishDate())); else ps.setNull(4, Types.DATE);
-            ps.setString(5, b.getIsbn());
-            ps.setInt(6, b.getId());
+            if (b.getAuthorId() != null) ps.setInt(3, b.getAuthorId()); else ps.setNull(3, Types.INTEGER);
+            ps.setString(4, b.getCategory());
+            if (b.getPublishDate() != null) ps.setDate(5, Date.valueOf(b.getPublishDate())); else ps.setNull(5, Types.DATE);
+            ps.setString(6, b.getIsbn());
+            ps.setInt(7, b.getId());
             ps.executeUpdate();
         }
     }
@@ -89,13 +94,19 @@ public class BookDAO {
         LocalDate date = null;
         Date d = rs.getDate("publish_date");
         if (d != null) date = d.toLocalDate();
-        return new Book(
+        Book b = new Book(
                 rs.getInt("id"),
                 rs.getString("title"),
-                rs.getString("author"),
+                // Prefer joined author_name; fallback to stored author string
+                rs.getString("author_name") != null ? rs.getString("author_name") : rs.getString("author"),
                 rs.getString("category"),
                 date,
                 rs.getString("isbn")
         );
+        try {
+            int aid = rs.getInt("author_id");
+            if (!rs.wasNull()) b.setAuthorId(aid);
+        } catch (SQLException ignored) { }
+        return b;
     }
 }

@@ -8,6 +8,8 @@
             <children>
                 <Label text="Dashboard" onMouseClicked="#goDashboard" styleClass="nav-item active" />
                 <Label text="Books" onMouseClicked="#goBooks" styleClass="nav-item" />
+                <Label fx:id="lblUsersNav" text="Users" onMouseClicked="#goUsers" styleClass="nav-item" />
+                <Label fx:id="lblAuthorsNav" text="Authors" onMouseClicked="#goAuthors" styleClass="nav-item" />
                 <Label text="Settings" onMouseClicked="#goSettings" styleClass="nav-item" />
                 <Label text="About" onMouseClicked="#goAbout" styleClass="nav-item" />
             </children>

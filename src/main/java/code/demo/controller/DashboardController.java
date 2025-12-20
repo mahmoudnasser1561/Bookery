@@ -13,6 +13,8 @@ public class DashboardController extends BaseController {
     @FXML private Label lblBooks;
     @FXML private Label lblUsers;
     @FXML private Label lblDbStatus;
+    @FXML private Label lblUsersNav;
+    @FXML private Label lblAuthorsNav;
 
     private final BookDAO bookDAO = new BookDAO();
     private final UserDAO userDAO = new UserDAO();
@@ -23,11 +25,17 @@ public class DashboardController extends BaseController {
         lblBooks.setText(String.valueOf(bookDAO.countBooks()));
         lblUsers.setText(String.valueOf(userDAO.countUsers()));
         lblDbStatus.setText(DatabaseConnection.getInstance().testConnection() ? "Online" : "Offline");
+
+        boolean admin = isAdmin();
+        if (lblUsersNav != null) lblUsersNav.setVisible(admin);
+        if (lblAuthorsNav != null) lblAuthorsNav.setVisible(admin);
     }
 
     // Sidebar navigation
     @FXML public void goDashboard(MouseEvent e){ /* already here */ }
     @FXML public void goBooks(MouseEvent e){ switchScene(lblWelcome, "view/books.fxml"); }
+    @FXML public void goUsers(MouseEvent e){ if (isAdmin()) switchScene(lblWelcome, "view/user_management.fxml"); }
+    @FXML public void goAuthors(MouseEvent e){ if (isAdmin()) switchScene(lblWelcome, "view/author_management.fxml"); }
     @FXML public void goSettings(MouseEvent e){ switchScene(lblWelcome, "view/settings.fxml"); }
     @FXML public void goAbout(MouseEvent e){ switchScene(lblWelcome, "view/about.fxml"); }
 }

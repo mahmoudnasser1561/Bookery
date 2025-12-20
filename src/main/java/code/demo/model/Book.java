@@ -5,7 +5,10 @@ import java.time.LocalDate;
 public class Book {
     private int id;
     private String title;
+    // Display name of the author (resolved from relation when possible)
     private String author;
+    // Relational author id (FK to authors.id)
+    private Integer authorId;
     private String category;
     private LocalDate publishDate;
     private String isbn;
@@ -27,6 +30,8 @@ public class Book {
     public void setTitle(String title) { this.title = title; }
     public String getAuthor() { return author; }
     public void setAuthor(String author) { this.author = author; }
+    public Integer getAuthorId() { return authorId; }
+    public void setAuthorId(Integer authorId) { this.authorId = authorId; }
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
     public LocalDate getPublishDate() { return publishDate; }

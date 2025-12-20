@@ -19,6 +19,9 @@ public class LoginController extends BaseController {
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtPassword;
     @FXML private Button btnLogin;
+    // Registration fields
+    @FXML private TextField txtRegEmail;
+    @FXML private PasswordField txtRegPassword;
 
     private final UserDAO userDAO = new UserDAO();
 
@@ -50,5 +53,28 @@ public class LoginController extends BaseController {
         User u = auth.get();
         UserSession.getInstance().login(u.getUsername(), u.getRole());
         switchScene(btnLogin, "view/dashboard.fxml");
+    }
+
+    @FXML
+    public void onRegister(ActionEvent e) {
+        String email = txtRegEmail != null ? txtRegEmail.getText().trim() : "";
+        String pass = txtRegPassword != null ? txtRegPassword.getText() : "";
+        if (!emailPattern.matcher(email).matches()) {
+            showError("Invalid Email", "Please enter a valid email address.");
+            return;
+        }
+        if (pass == null || pass.length() < 6) {
+            showError("Weak Password", "Password must be at least 6 characters.");
+            return;
+        }
+        boolean ok = userDAO.register(email, pass);
+        if (ok) {
+            showInfo("Registration Successful", "Account created. You can now login.");
+            if (txtEmail != null) txtEmail.setText(email);
+            if (txtPassword != null) txtPassword.setText("");
+            if (txtRegPassword != null) txtRegPassword.setText("");
+        } else {
+            showError("Registration Failed", "Could not create account. Email might already be used.");
+        }
     }
 }

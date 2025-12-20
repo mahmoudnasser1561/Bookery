@@ -13,6 +13,18 @@
                         <TextField fx:id="txtEmail" promptText="Email" />
                         <PasswordField fx:id="txtPassword" promptText="Password" onKeyPressed="#onEnterKey" />
                         <Button fx:id="btnLogin" text="Login" onAction="#onLogin" maxWidth="Infinity" />
+                        <Separator />
+                        <TitledPane text="Register" expanded="false">
+                            <content>
+                                <VBox spacing="8">
+                                    <children>
+                                        <TextField fx:id="txtRegEmail" promptText="Email" />
+                                        <PasswordField fx:id="txtRegPassword" promptText="Password (min 6)" />
+                                        <Button text="Create Account" onAction="#onRegister" maxWidth="Infinity" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
                     </children>
                 </VBox>
             </children>

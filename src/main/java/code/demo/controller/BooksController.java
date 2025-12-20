@@ -2,6 +2,8 @@ package code.demo.controller;
 
 import code.demo.core.UserSession;
 import code.demo.dao.BookDAO;
+import code.demo.dao.AuthorDAO;
+import code.demo.model.Author;
 import code.demo.model.Book;
 import code.demo.model.Role;
 import javafx.beans.binding.Bindings;
@@ -34,6 +36,7 @@ public class BooksController extends BaseController {
     @FXML private Button btnDelete;
 
     private final BookDAO bookDAO = new BookDAO();
+    private final AuthorDAO authorDAO = new AuthorDAO();
     private final ObservableList<Book> data = FXCollections.observableArrayList();
 
     @FXML
@@ -149,8 +152,14 @@ public class BooksController extends BaseController {
 
         TextField title = new TextField(isEdit ? original.getTitle() : "");
         title.setPromptText("Title");
-        TextField author = new TextField(isEdit ? original.getAuthor() : "");
-        author.setPromptText("Author");
+        ComboBox<Author> author = new ComboBox<>();
+        author.getItems().setAll(authorDAO.findAll());
+        if (isEdit && original.getAuthorId() != null) {
+            author.getItems().stream().filter(a -> a.getId() == original.getAuthorId()).findFirst().ifPresent(a -> author.getSelectionModel().select(a));
+        } else if (isEdit) {
+            // Try to match by name fallback
+            author.getItems().stream().filter(a -> original.getAuthor()!=null && original.getAuthor().equalsIgnoreCase(a.getName())).findFirst().ifPresent(a -> author.getSelectionModel().select(a));
+        }
         ComboBox<String> category = new ComboBox<>();
         category.getItems().addAll("Fiction","Non-Fiction","Science","History","Technology","Children");
         if (isEdit) category.getSelectionModel().select(original.getCategory());
@@ -169,7 +178,7 @@ public class BooksController extends BaseController {
 
         dialog.setResultConverter(bt -> {
             if (bt == ButtonType.OK) {
-                if (title.getText().isBlank() || author.getText().isBlank() || category.getValue() == null) {
+                if (title.getText().isBlank() || author.getValue() == null || category.getValue() == null) {
                     showError("Validation", "Title, Author, and Category are required.");
                     return null;
                 }
@@ -179,7 +188,8 @@ public class BooksController extends BaseController {
                 }
                 Book b = isEdit ? original : new Book();
                 b.setTitle(title.getText().trim());
-                b.setAuthor(author.getText().trim());
+                b.setAuthor(author.getValue().getName());
+                b.setAuthorId(author.getValue().getId());
                 b.setCategory(category.getValue());
                 b.setPublishDate(publish.getValue());
                 b.setIsbn(isbn.getText().trim());
